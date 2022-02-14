@@ -353,10 +353,7 @@ class BadgeViewHelper(
      * @param canvas
      */
     private fun drawTextBadge(canvas: Canvas) {
-        val badgeText = this.badgeText
-        if (badgeText.isNullOrEmpty()) {
-            return
-        }
+        val badgeText = this.badgeText ?: ""
         // 获取文本宽所占宽高
         mBadgePaint.getTextBounds(badgeText, 0, badgeText.length, mBadgeNumberRect)
         // 计算徽章背景的宽高
@@ -418,7 +415,7 @@ class BadgeViewHelper(
             // 绘制徽章背景
             canvas.drawRoundRect(badgeRectF, badgeHeight / 2f, badgeHeight / 2f, mBadgePaint)
         }
-        if (!TextUtils.isEmpty(this.badgeText)) {
+        if (!this.badgeText.isNullOrEmpty()) {
             // 设置徽章文本颜色
             mBadgePaint.color = badgeTextColor
             // initDefaultAttrs方法中设置了mBadgeText居中，此处的x为徽章背景的中心点y
