@@ -1,7 +1,8 @@
-package com.fz.badgeview
+package com.fz.badgeview.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.fz.badgeview.BadgeImageView
 
 class MainActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
