@@ -25,8 +25,9 @@
 
 ```groovy
 dependencies {
-    implementation 'com.github.peihua8858.BadgeView:api:latestVersion'
-    annotationProcessor 'com.github.peihua8858.BadgeView:compiler:latestVersion'
+    implementation 'com.github.peihua8858.BadgeView:BadgeView:latestVersion'
+    implementation 'com.github.peihua8858.BadgeView:BadgeView-annotation:latestVersion'
+    annotationProcessor 'com.github.peihua8858.BadgeView:BadgeView-compiler:latestVersion'
 }
 ```
 
