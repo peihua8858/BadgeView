@@ -6,11 +6,7 @@ Android徽章视图
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-BGABadgeView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2106)
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Download](https://jitpack.io/v/bingoogolapple/BGABadgeView-Android.svg)](https://jitpack.io/#bingoogolapple/BGABadgeView-Android)
-
-### [English Document](https://github.com/bingoogolapple/BGABadgeView-Android/blob/master/README-en.md)
-
-### [react-native-bga-badge-view](https://github.com/bingoogolapple/react-native-bga-badge-view)
+[![Download](https://jitpack.io/v/peihua8858/BadgeView.svg)](https://jitpack.io/#peihua8858/BadgeView)
 
 **demo中演示了:**
 * 微博底部tab显示最新微博条数
