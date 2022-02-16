@@ -3,12 +3,14 @@ package com.fz.badgeview
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.view.MotionEvent
+import androidx.annotation.ColorInt
+import androidx.annotation.Px
 
 /**
  * IBadgeable
  * Created by dingpeihua on 2017/8/1.
  */
-interface IBadgeFeature :IBadgeView{
+interface IBadgeFeature : IBadgeView {
     /**
      * 显示圆点徽章
      */
@@ -68,14 +70,57 @@ interface IBadgeFeature :IBadgeView{
      * @return
      */
     fun isDragging(): Boolean
+
+    /**
+     * 徽章视图辅助类
+     */
     val badgeViewHelper: BadgeViewHelper
 
-    fun setBadgeBgColorInt(badgeBgColor: Int)
-    fun setBadgeTextColorInt(badgeTextColor: Int)
-    fun setBadgeTextSizeSp(badgetextSize: Int)
+    /**
+     * 设置徽章背景色
+     * @param badgeBgColor
+     */
+    fun setBadgeBgColorInt(@ColorInt badgeBgColor: Int)
+
+    /**
+     * 设置徽章文本字体颜色
+     * @param badgeTextColor
+     */
+    fun setBadgeTextColorInt(@ColorInt badgeTextColor: Int)
+
+    /**
+     * 设置徽章文本字体大小
+     * @param badgeTextSize
+     */
+    fun setBadgeTextSizeSp(badgeTextSize: Int)
+
+    /**
+     * 设置徽章锤子间距
+     * @param badgeVerticalMargin
+     */
     fun setBadgeVerticalMarginDp(badgeVerticalMargin: Int)
+
+    /**
+     * 设置徽章水平间距
+     * @param badgeHorizontalMargin
+     */
     fun setBadgeHorizontalMarginDp(badgeHorizontalMargin: Int)
+
+    /**
+     * 设置徽章内边距
+     * @param badgePadding
+     */
     fun setBadgePaddingDp(badgePadding: Int)
+
+    /**
+     * 设置徽章位置
+     * @param badgeGravity
+     */
     fun setBadgeGravity(badgeGravity: BadgeViewHelper.BadgeGravity)
+
+    /**
+     * 设置是否可拖动
+     * @param draggable
+     */
     fun setDraggable(draggable: Boolean)
 }

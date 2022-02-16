@@ -12,4 +12,4 @@ import kotlin.reflect.KClass
  */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
-annotation class BadgeView(val values: Array<KClass<out View>>)
+annotation class BadgeView(val value: Array<KClass<out View>>)

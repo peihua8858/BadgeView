@@ -7,6 +7,12 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
+/**
+ *徽章处理辅助类
+ * @author dingpeihua
+ * @date 2022/2/16 14:40
+ * @version 1.0
+ */
 class BadgeViewHelper(
     private val mBadgeFeature: IBadgeFeature,
     context: Context,
@@ -15,6 +21,7 @@ class BadgeViewHelper(
 ) {
     var bitmap: Bitmap? = null
         private set
+
     private var mBadgePaint: Paint
 
     /**

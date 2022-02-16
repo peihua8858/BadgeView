@@ -99,7 +99,7 @@ class BadgeProcessor : AbstractProcessor() {
             // 获取该注解的值
             val badgeAnnotation = classElement.getAnnotation(BadgeView::class.java)
             try {
-                badgeAnnotation.values
+                badgeAnnotation.value
             } catch (e: MirroredTypesException) {
                 val typeMirrors = e.typeMirrors
                 for (typeMirror in typeMirrors) {

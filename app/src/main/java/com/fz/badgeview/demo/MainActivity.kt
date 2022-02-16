@@ -8,7 +8,7 @@ import com.fz.badgeview.annotation.BadgeView
 import com.fz.imageloader.widget.RatioImageView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-@BadgeView(values=[
+@BadgeView([
     View::class,  // 对应 com.fz.badgeview.BadgeView，不想用这个类的话就删了这一行
     ImageView::class,  // 对应 com.fz.badgeview.BadgeImageView，不想用这个类的话就删了这一行
     RatioImageView::class,// 对应 com.fz.badgeview.BadgeRatioImageView，不想用这个类的话就删了这一行
