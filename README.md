@@ -1,6 +1,3 @@
-# BadgeView[![](https://jitpack.io/v/peihua8858/BadgeView.svg)](https://jitpack.io/#peihua8858/BadgeView)
-Android徽章视图
-
 :heartpulse:BGABadgeView-Android:heartpulse:
 ============
 
@@ -27,12 +24,12 @@ Android徽章视图
 ### 添加 Gradle 依赖
 
 * 把 `maven { url 'https://jitpack.io' }` 加入到 repositories 中
-* 添加如下依赖，末尾的「latestVersion」指的是徽章[![Download](https://jitpack.io/v/bingoogolapple/BGABadgeView-Android.svg)](https://jitpack.io/#bingoogolapple/BGABadgeView-Android)里的版本名称，请自行替换。
+* 添加如下依赖，末尾的「latestVersion」指的是徽章[![Download](https://jitpack.io/v/peihua8858/BadgeView.svg)](https://jitpack.io/#peihua8858/BadgeView)里的版本名称，请自行替换。
 
 ```groovy
 dependencies {
-    implementation 'com.github.bingoogolapple.BGABadgeView-Android:api:latestVersion'
-    annotationProcessor 'com.github.bingoogolapple.BGABadgeView-Android:compiler:latestVersion'
+    implementation 'com.github.peihua8858.BadgeView:api:latestVersion'
+    annotationProcessor 'com.github.peihua8858.BadgeView:compiler:latestVersion'
 }
 ```
 
@@ -41,24 +38,24 @@ dependencies {
 1. 在项目任意一个类上面添加 BGABadge 注解，例如新建一个类 BGABadgeInit 专门用于初始化徽章控件
 2. 需要哪些类具有徽章功能，就把那些类的 Class 作为 BGABadge 注解的参数「下面的代码块给出了例子，不需要的可以删掉对应的行」
 ```Java
-@BGABadge({
-        View.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeView，不想用这个类的话就删了这一行
-        ImageView.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeImageView，不想用这个类的话就删了这一行
-        TextView.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeFloatingTextView，不想用这个类的话就删了这一行
-        RadioButton.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeRadioButton，不想用这个类的话就删了这一行
-        LinearLayout.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeLinearLayout，不想用这个类的话就删了这一行
-        FrameLayout.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeFrameLayout，不想用这个类的话就删了这一行
-        RelativeLayout.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeRelativeLayout，不想用这个类的话就删了这一行
-        FloatingActionButton.class, // 对应 cn.bingoogolapple.badgeview.BGABadgeFloatingActionButton，不想用这个类的话就删了这一行
+@BadgeView({
+        View.class, // 对应 com.fz.badgeview.BadgeView，不想用这个类的话就删了这一行
+        ImageView.class, // 对应 com.fz.badgeview.BadgeImageView，不想用这个类的话就删了这一行
+        TextView.class, // 对应 com.fz.badgeview.BadgeFloatingTextView，不想用这个类的话就删了这一行
+        RadioButton.class, // 对应 com.fz.badgeview.BadgeRadioButton，不想用这个类的话就删了这一行
+        LinearLayout.class, // 对应 com.fz.badgeview.BadgeLinearLayout，不想用这个类的话就删了这一行
+        FrameLayout.class, // 对应 com.fz.badgeview.BadgeFrameLayout，不想用这个类的话就删了这一行
+        RelativeLayout.class, // 对应 com.fz.badgeview.BadgeRelativeLayout，不想用这个类的话就删了这一行
+        FloatingActionButton.class, // 对应 com.fz.badgeview.BadgeFloatingActionButton，不想用这个类的话就删了这一行
         ...
         ...
         ...
 })
-public class BGABadgeInit {
+public class BadgeInit {
 }
 ```
 3. 再 AS 中执行 Build => Rebuild Project
-4. 经过前面三个步骤后就可以通过「cn.bingoogolapple.badgeview.BGABadge原始类名」来使用徽章控件了
+4. 经过前面三个步骤后就可以通过「com.fz.badgeview.BGABadge原始类名」来使用徽章控件了
 
 ### 接口说明
 
