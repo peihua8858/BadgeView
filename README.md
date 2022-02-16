@@ -15,8 +15,8 @@
 
 ### 爆炸效果参考的 [ExplosionField](https://github.com/tyrantgit/ExplosionField) 改成了只有一个View的情况,只刷新徽章附近的区域
 
-### 效果图
-![badgeview](https://cloud.githubusercontent.com/assets/8949716/17483429/8f5ab3aa-5db8-11e6-808c-6033f5d5c4ec.gif)
+--### 效果图
+--![badgeview](https://cloud.githubusercontent.com/assets/8949716/17483429/8f5ab3aa-5db8-11e6-808c-6033f5d5c4ec.gif)
 
 ### 添加 Gradle 依赖
 
@@ -130,7 +130,7 @@ badge_dragExtra         | 触发开始拖拽徽章事件的扩展触摸距离   
 
 ## License
 
-    Copyright 2015 bingoogolapple
+    Copyright 2015 peihua8858
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
