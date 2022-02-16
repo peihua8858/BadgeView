@@ -35,21 +35,16 @@ dependencies {
 
 1. 在项目任意一个类上面添加 BadgeView 注解，例如新建一个类 BadgeInit 专门用于初始化徽章控件
 2. 需要哪些类具有徽章功能，就把那些类的 Class 作为 BadgeView 注解的参数「下面的代码块给出了例子，不需要的可以删掉对应的行」
-```Java
-@BadgeView({
-        View.class, // 对应 com.fz.badgeview.BadgeView，不想用这个类的话就删了这一行
-        ImageView.class, // 对应 com.fz.badgeview.BadgeImageView，不想用这个类的话就删了这一行
-        TextView.class, // 对应 com.fz.badgeview.BadgeFloatingTextView，不想用这个类的话就删了这一行
-        RadioButton.class, // 对应 com.fz.badgeview.BadgeRadioButton，不想用这个类的话就删了这一行
-        LinearLayout.class, // 对应 com.fz.badgeview.BadgeLinearLayout，不想用这个类的话就删了这一行
-        FrameLayout.class, // 对应 com.fz.badgeview.BadgeFrameLayout，不想用这个类的话就删了这一行
-        RelativeLayout.class, // 对应 com.fz.badgeview.BadgeRelativeLayout，不想用这个类的话就删了这一行
-        FloatingActionButton.class, // 对应 com.fz.badgeview.BadgeFloatingActionButton，不想用这个类的话就删了这一行
-        ...
-        ...
-        ...
-})
-public class BadgeInit {
+#### Kotlin
+```kotlin
+@BadgeView(values = [RatioImageView::class, TextView::class, FrameLayout::class])
+class MainActivity : BaseActivity(R.layout.activity_main) {
+}
+```
+#### Java
+```java
+@BadgeView(values = {View.class, TextView.class, FrameLayout.class})
+public class MainActivity extends BaseActivity{
 }
 ```
 3. 再 AS 中执行 Build => Rebuild Project
@@ -57,58 +52,76 @@ public class BadgeInit {
 
 ### 接口说明
 
-```java
-/**
- * 显示圆点徽章
- */
-void showCirclePointBadge();
+```kotlin
+ /**
+     * 显示圆点徽章
+     */
+    fun showCirclePointBadge()
 
-/**
- * 显示文字徽章
- *
- * @param badgeText
- */
-void showTextBadge(String badgeText);
+    /**
+     * 显示文字徽章
+     *
+     * @param badgeText
+     */
+    fun showTextBadge(badgeText: String)
 
-/**
- * 隐藏徽章
- */
-void hiddenBadge();
+    /**
+     * 隐藏徽章
+     */
+    fun hiddenBadge()
 
-/**
- * 显示图像徽章
- *
- * @param bitmap
- */
-void showDrawableBadge(Bitmap bitmap);
+    /**
+     * 显示图像徽章
+     *
+     * @param bitmap
+     */
+    fun showDrawableBadge(bitmap: Bitmap)
 
-/**
- * 设置拖动删除徽章的代理
- *
- * @param delegate
- */
-void setDragDismissDelegage(DragDismissDelegate delegate);
+    /**
+     * 调用父类的onTouchEvent方法
+     *
+     * @param event
+     * @return
+     */
+    fun callSuperOnTouchEvent(event: MotionEvent): Boolean
 
-/**
- * 是否显示徽章
- *
- * @return
- */
-boolean isShowBadge();
+    /**
+     * 拖动大于BGABadgeViewHelper.mMoveHiddenThreshold后抬起手指徽章消失的代理
+     *
+     * @param delegate
+     */
+    fun setDragDismissDelegate(delegate: DragDismissDelegate)
 
-/**
- * 是否可拖动
- *
- * @return
- */
-boolean isDraggable();
+    /**
+     * 是否显示徽章
+     *
+     * @return
+     */
+    val isShowBadge: Boolean
 
-/**
- * 是否正在拖动
- *
- * @return
- */
-boolean isDragging();
+    /**
+     * 是否可拖动
+     *
+     * @return
+     */
+    fun isDraggable(): Boolean
+
+    /**
+     * 是否正在拖动
+     *
+     * @return
+     */
+    fun isDragging(): Boolean
+    val badgeViewHelper: BadgeViewHelper
+
+    fun setBadgeBgColorInt(badgeBgColor: Int)
+    fun setBadgeTextColorInt(badgeTextColor: Int)
+    fun setBadgeTextSizeSp(badgetextSize: Int)
+    fun setBadgeVerticalMarginDp(badgeVerticalMargin: Int)
+    fun setBadgeHorizontalMarginDp(badgeHorizontalMargin: Int)
+    fun setBadgePaddingDp(badgePadding: Int)
+    fun setBadgeGravity(badgeGravity: BadgeViewHelper.BadgeGravity)
+    fun setDraggable(draggable: Boolean)
 ```
 
 ### 自定义属性说明
