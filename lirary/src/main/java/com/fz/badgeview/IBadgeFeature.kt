@@ -3,12 +3,12 @@ package com.fz.badgeview
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.view.MotionEvent
-import android.view.View
 
 /**
+ * IBadgeable
  * Created by dingpeihua on 2017/8/1.
  */
-interface IBadgeable :IBadgeView{
+interface IBadgeFeature :IBadgeView{
     /**
      * 显示圆点徽章
      */
@@ -54,13 +54,22 @@ interface IBadgeable :IBadgeView{
      * @return
      */
     val isShowBadge: Boolean
+
+    /**
+     * 是否可拖动
+     *
+     * @return
+     */
+    fun isDraggable(): Boolean
+
+    /**
+     * 是否正在拖动
+     *
+     * @return
+     */
+    fun isDragging(): Boolean
     val badgeViewHelper: BadgeViewHelper
 
-    //    val parent: ViewParent?
-//   val id: Int
-//   val context: Context
-    fun getGlobalVisibleRect(r: Rect?): Boolean
-    fun postInvalidate()
     fun setBadgeBgColorInt(badgeBgColor: Int)
     fun setBadgeTextColorInt(badgeTextColor: Int)
     fun setBadgeTextSizeSp(badgetextSize: Int)
@@ -68,5 +77,5 @@ interface IBadgeable :IBadgeView{
     fun setBadgeHorizontalMarginDp(badgeHorizontalMargin: Int)
     fun setBadgePaddingDp(badgePadding: Int)
     fun setBadgeGravity(badgeGravity: BadgeViewHelper.BadgeGravity)
-    fun setDragable(dragable: Boolean)
+    fun setDraggable(draggable: Boolean)
 }

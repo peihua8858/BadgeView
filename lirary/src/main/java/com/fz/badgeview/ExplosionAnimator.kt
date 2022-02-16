@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.graphics.*
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
-import com.fz.badgeview.BadgeViewUtil.dp2px
 import java.util.*
 
 /**
@@ -130,10 +129,10 @@ class ExplosionAnimator(dragBadgeView: DragBadgeView, rect: Rect, bitmap: Bitmap
         setFloatValues(0.0f, END_VALUE)
         duration = ANIM_DURATION.toLong()
         interpolator = DEFAULT_INTERPOLATOR
-        X = dp2px(dragBadgeView.context, 5f).toFloat()
-        Y = dp2px(dragBadgeView.context, 20f).toFloat()
-        V = dp2px(dragBadgeView.context, 2f).toFloat()
-        W = dp2px(dragBadgeView.context, 1f).toFloat()
+        X = BadgeViewUtil.dp2px(dragBadgeView.context, 5f).toFloat()
+        Y = BadgeViewUtil.dp2px(dragBadgeView.context, 20f).toFloat()
+        V = BadgeViewUtil.dp2px(dragBadgeView.context, 2f).toFloat()
+        W = BadgeViewUtil.dp2px(dragBadgeView.context, 1f).toFloat()
         mPaint = Paint()
         mDragBadgeView = dragBadgeView
         mRect = rect

@@ -3,10 +3,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
         maven { url 'https://jitpack.io' }
         jcenter() // Warning: this repository is going to shut down soon
+        maven {
+            url uri('repo')
+        }
     }
 }
 rootProject.name = "BadgeView"
 include ':app'
 include ':lirary'
+include ':annotation'
+include ':compiler'

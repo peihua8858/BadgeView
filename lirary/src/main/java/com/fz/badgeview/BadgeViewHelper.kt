@@ -3,16 +3,12 @@ package com.fz.badgeview
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.socks.library.KLog
 
-/**
- */
 class BadgeViewHelper(
-    private val mBadgeable: IBadgeable,
+    private val mBadgeFeature: IBadgeFeature,
     context: Context,
     attrs: AttributeSet?,
     defaultBadgeGravity: BadgeGravity
@@ -80,13 +76,13 @@ class BadgeViewHelper(
     /**
      * 整个徽章所占区域
      */
-    var badgeRectF: RectF
+    var badgeRectF: RectF = RectF()
         private set
 
     /**
      * 是否可拖动
      */
-    private var mDragable = false
+    private var mDraggable = false
 
     /**
      * 拖拽徽章超出轨迹范围后，再次放回到轨迹范围时，是否恢复轨迹
@@ -111,7 +107,7 @@ class BadgeViewHelper(
     /**
      * 整个徽章加上其触发开始拖拽区域所占区域
      */
-    private var mBadgeDragExtraRectF: RectF
+    private var mBadgeDragExtraRectF: RectF = RectF()
 
     /**
      * 拖动时的徽章控件
@@ -121,14 +117,36 @@ class BadgeViewHelper(
     /**
      * 是否正在拖动
      */
-    private var mIsDraging = false
+    var isDragging = false
+        private set
 
     /**
-     * 拖动大于[BadgeViewHelper.mMoveHiddenThreshold]后抬起手指徽章消失的代理
+     * 拖动大于BGABadgeViewHelper.mMoveHiddenThreshold后抬起手指徽章消失的代理
      */
-    private var mDelegage: DragDismissDelegate? = null
+    private var mDelegate: DragDismissDelegate? = null
     var isShowDrawable = false
         private set
+
+    private fun initDefaultAttrs(context: Context) {
+        badgeBgColor = Color.RED
+        badgeTextColor = Color.WHITE
+        badgeTextSize = BadgeViewUtil.sp2px(context, 10f)
+        mBadgePaint = Paint()
+        mBadgePaint.isAntiAlias = true
+        mBadgePaint.style = Paint.Style.FILL
+        // 设置mBadgeText居中，保证mBadgeText长度为1时，文本也能居中
+        mBadgePaint.textAlign = Paint.Align.CENTER
+        badgePadding = BadgeViewUtil.dp2px(context, 4f)
+        mBadgeVerticalMargin = BadgeViewUtil.dp2px(context, 4f)
+        mBadgeHorizontalMargin = BadgeViewUtil.dp2px(context, 4f)
+        isShowBadge = false
+        badgeText = null
+        bitmap = null
+        isDragging = false
+        mDraggable = false
+        mBadgeBorderColor = Color.WHITE
+        mDragExtra = BadgeViewUtil.dp2px(context, 4f)
+    }
 
     private fun initCustomAttrs(context: Context, attrs: AttributeSet?) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BadgeView)
@@ -164,8 +182,8 @@ class BadgeViewHelper(
                 val ordinal = typedArray.getInt(attr, mBadgeGravity.ordinal)
                 mBadgeGravity = BadgeGravity.values()[ordinal]
             }
-            R.styleable.BadgeView_badge_dragable -> {
-                mDragable = typedArray.getBoolean(attr, mDragable)
+            R.styleable.BadgeView_badge_draggable -> {
+                mDraggable = typedArray.getBoolean(attr, mDraggable)
             }
             R.styleable.BadgeView_badge_isResumeTravel -> {
                 mIsResumeTravel = typedArray.getBoolean(attr, mIsResumeTravel)
@@ -191,68 +209,63 @@ class BadgeViewHelper(
 
     fun setBadgeBgColorInt(badgeBgColor: Int) {
         this.badgeBgColor = badgeBgColor
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun setBadgeTextColorInt(badgeTextColor: Int) {
         this.badgeTextColor = badgeTextColor
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun setBadgeTextSizeSp(badgetextSize: Int) {
         if (badgetextSize >= 0) {
-            badgeTextSize = BadgeViewUtil.sp2px(mBadgeable.context, badgetextSize.toFloat())
+            badgeTextSize = BadgeViewUtil.sp2px(mBadgeFeature.context, badgetextSize.toFloat())
             mBadgePaint.textSize = badgeTextSize.toFloat()
-            mBadgeable.postInvalidate()
+            mBadgeFeature.postInvalidate()
         }
     }
 
     fun setBadgeVerticalMarginDp(badgeVerticalMargin: Int) {
         if (badgeVerticalMargin >= 0) {
             mBadgeVerticalMargin =
-                BadgeViewUtil.dp2px(mBadgeable.context, badgeVerticalMargin.toFloat())
-            mBadgeable.postInvalidate()
+                BadgeViewUtil.dp2px(mBadgeFeature.context, badgeVerticalMargin.toFloat())
+            mBadgeFeature.postInvalidate()
         }
     }
 
     fun setBadgeHorizontalMarginDp(badgeHorizontalMargin: Int) {
         if (badgeHorizontalMargin >= 0) {
             mBadgeHorizontalMargin =
-                BadgeViewUtil.dp2px(mBadgeable.context, badgeHorizontalMargin.toFloat())
-            mBadgeable.postInvalidate()
+                BadgeViewUtil.dp2px(mBadgeFeature.context, badgeHorizontalMargin.toFloat())
+            mBadgeFeature.postInvalidate()
         }
     }
 
     fun setBadgePaddingDp(badgePadding: Int) {
         if (badgePadding >= 0) {
-            this.badgePadding = BadgeViewUtil.dp2px(mBadgeable.context, badgePadding.toFloat())
-            mBadgeable.postInvalidate()
+            this.badgePadding = BadgeViewUtil.dp2px(mBadgeFeature.context, badgePadding.toFloat())
+            mBadgeFeature.postInvalidate()
         }
     }
 
     fun setBadgeGravity(badgeGravity: BadgeGravity?) {
         if (badgeGravity != null) {
             mBadgeGravity = badgeGravity
-            mBadgeable.postInvalidate()
+            mBadgeFeature.postInvalidate()
         }
-    }
-
-    fun setDragable(dragable: Boolean) {
-        mDragable = dragable
-        mBadgeable.postInvalidate()
     }
 
     fun setBadgeBorderWidthDp(badgeBorderWidthDp: Int) {
         if (badgeBorderWidthDp >= 0) {
             mBadgeBorderWidth =
-                BadgeViewUtil.dp2px(mBadgeable.context, badgeBorderWidthDp.toFloat())
-            mBadgeable.postInvalidate()
+                BadgeViewUtil.dp2px(mBadgeFeature.context, badgeBorderWidthDp.toFloat())
+            mBadgeFeature.postInvalidate()
         }
     }
 
     fun setBadgeBorderColorInt(badgeBorderColor: Int) {
         mBadgeBorderColor = badgeBorderColor
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun onTouchEvent(event: MotionEvent): Boolean {
@@ -262,52 +275,50 @@ class BadgeViewHelper(
                 mBadgeDragExtraRectF.top = badgeRectF.top - mDragExtra
                 mBadgeDragExtraRectF.right = badgeRectF.right + mDragExtra
                 mBadgeDragExtraRectF.bottom = badgeRectF.bottom + mDragExtra
-                if ((mBadgeBorderWidth == 0 || isShowDrawable) && mDragable && isShowBadge && mBadgeDragExtraRectF.contains(
+                if ((mBadgeBorderWidth == 0 || isShowDrawable) && mDraggable && isShowBadge && mBadgeDragExtraRectF.contains(
                         event.x,
                         event.y
                     )
                 ) {
-                    mIsDraging = true
-                    mBadgeable.parent?.requestDisallowInterceptTouchEvent(true)
+                    isDragging = true
+                    mBadgeFeature.parent.requestDisallowInterceptTouchEvent(true)
                     val badgeableRect = Rect()
-                    mBadgeable.getGlobalVisibleRect(badgeableRect)
+                    mBadgeFeature.getGlobalVisibleRect(badgeableRect)
                     mDropBadgeView.setStickCenter(
                         badgeableRect.left + badgeRectF.left + badgeRectF.width() / 2,
                         badgeableRect.top + badgeRectF.top + badgeRectF.height() / 2
                     )
                     mDropBadgeView.onTouchEvent(event)
-                    mBadgeable.postInvalidate()
+                    mBadgeFeature.postInvalidate()
                     return true
                 }
             }
-            MotionEvent.ACTION_MOVE -> if (mIsDraging) {
+            MotionEvent.ACTION_MOVE -> if (isDragging) {
                 mDropBadgeView.onTouchEvent(event)
                 return true
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> if (mIsDraging) {
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> if (isDragging) {
                 mDropBadgeView.onTouchEvent(event)
-                mIsDraging = false
+                isDragging = false
                 return true
             }
             else -> {
             }
         }
-        return mBadgeable.callSuperOnTouchEvent(event)
+        return mBadgeFeature.callSuperOnTouchEvent(event)
     }
 
     fun endDragWithDismiss() {
         hiddenBadge()
-        if (mDelegage != null) {
-            mDelegage!!.onDismiss(mBadgeable)
-        }
+        mDelegate?.onDismiss(mBadgeFeature)
     }
 
     fun endDragWithoutDismiss() {
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun drawBadge(canvas: Canvas) {
-        if (isShowBadge && !mIsDraging) {
+        if (isShowBadge && !isDragging) {
             if (isShowDrawable) {
                 drawDrawableBadge(canvas)
             } else {
@@ -323,15 +334,14 @@ class BadgeViewHelper(
      */
     private fun drawDrawableBadge(canvas: Canvas) {
         val bitmap = this.bitmap ?: return
-        badgeRectF.left = (mBadgeable.width - mBadgeHorizontalMargin - bitmap.width).toFloat()
+        badgeRectF.left = (mBadgeFeature.width - mBadgeHorizontalMargin - bitmap.width).toFloat()
         badgeRectF.top = mBadgeVerticalMargin.toFloat()
-        KLog.d("LockBadgeView>>>>mBadgeRectF:$badgeRectF")
         when (mBadgeGravity) {
             BadgeGravity.RightTop -> badgeRectF.top = mBadgeVerticalMargin.toFloat()
             BadgeGravity.RightCenter -> badgeRectF.top =
-                ((mBadgeable.height - bitmap.height) / 2).toFloat()
+                ((mBadgeFeature.height - bitmap.height) / 2).toFloat()
             BadgeGravity.RightBottom -> badgeRectF.top =
-                (mBadgeable.height - bitmap.height - mBadgeVerticalMargin).toFloat()
+                (mBadgeFeature.height - bitmap.height - mBadgeVerticalMargin).toFloat()
             BadgeGravity.LeftTop -> {
                 badgeRectF.left = mBadgeVerticalMargin.toFloat()
                 badgeRectF.top = mBadgeHorizontalMargin.toFloat()
@@ -341,7 +351,6 @@ class BadgeViewHelper(
             else -> {
             }
         }
-        KLog.d("LockBadgeView>>>>mBadgeRectF:$badgeRectF")
         canvas.drawBitmap(bitmap, badgeRectF.left, badgeRectF.top, mBadgePaint)
         badgeRectF.right = badgeRectF.left + bitmap.width
         badgeRectF.bottom = badgeRectF.top + bitmap.height
@@ -367,13 +376,13 @@ class BadgeViewHelper(
 
         // 计算徽章背景上下的值
         badgeRectF.top = mBadgeVerticalMargin.toFloat()
-        badgeRectF.bottom = (mBadgeable.height - mBadgeVerticalMargin).toFloat()
-        badgeRectF.right = (mBadgeable.width - mBadgeHorizontalMargin).toFloat()
+        badgeRectF.bottom = (mBadgeFeature.height - mBadgeVerticalMargin).toFloat()
+        badgeRectF.right = (mBadgeFeature.width - mBadgeHorizontalMargin).toFloat()
         badgeRectF.left = badgeRectF.right - badgeWidth
         when (mBadgeGravity) {
             BadgeGravity.RightTop -> badgeRectF.bottom = badgeRectF.top + badgeHeight
             BadgeGravity.RightCenter -> {
-                badgeRectF.top = (mBadgeable.height - badgeHeight) / 2f
+                badgeRectF.top = (mBadgeFeature.height - badgeHeight) / 2f
                 badgeRectF.bottom = badgeRectF.top + badgeHeight
             }
             BadgeGravity.RightBottom -> badgeRectF.top = badgeRectF.bottom - badgeHeight
@@ -386,9 +395,10 @@ class BadgeViewHelper(
             else -> {
             }
         }
-        KLog.d("LockBadgeView>>>>mBadgeGravity:$mBadgeGravity")
-        KLog.d("LockBadgeView>>>>mBadgeRectF:$badgeRectF")
+
         // 计算徽章背景左右的值
+        badgeRectF.right = (mBadgeFeature.width - mBadgeHorizontalMargin).toFloat()
+        badgeRectF.left = badgeRectF.right - badgeWidth
         if (mBadgeBorderWidth > 0) {
             // 设置徽章边框景色
             mBadgePaint.color = mBadgeBorderColor
@@ -435,32 +445,38 @@ class BadgeViewHelper(
         isShowDrawable = false
         this.badgeText = badgeText
         isShowBadge = true
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun hiddenBadge() {
         isShowBadge = false
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun showDrawable(bitmap: Bitmap) {
         this.bitmap = bitmap
         isShowDrawable = true
         isShowBadge = true
-        mBadgeable.postInvalidate()
+        mBadgeFeature.postInvalidate()
     }
 
     fun setDragDismissDelegate(delegate: DragDismissDelegate?) {
-        mDelegage = delegate
+        mDelegate = delegate
     }
 
     val rootView: View?
-        get() = mBadgeable.rootView
+        get() = mBadgeFeature.rootView
     var isResumeTravel: Boolean
         get() = mIsResumeTravel
         set(isResumeTravel) {
             mIsResumeTravel = isResumeTravel
-            mBadgeable.postInvalidate()
+            mBadgeFeature.postInvalidate()
+        }
+    var isDraggable: Boolean
+        get() = mDraggable
+        set(draggable) {
+            mDraggable = draggable
+            mBadgeFeature.postInvalidate()
         }
 
     enum class BadgeGravity {
@@ -468,27 +484,12 @@ class BadgeViewHelper(
     }
 
     init {
-        badgeRectF = RectF()
         badgeBgColor = Color.RED
         badgeTextColor = Color.WHITE
         badgeTextSize = BadgeViewUtil.sp2px(context, 10f)
         mBadgePaint = Paint()
-        mBadgePaint.isAntiAlias = true
-        mBadgePaint.style = Paint.Style.FILL
-        // 设置mBadgeText居中，保证mBadgeText长度为1时，文本也能居中
-        mBadgePaint.textAlign = Paint.Align.CENTER
-        badgePadding = BadgeViewUtil.dp2px(context, 4f)
-        mBadgeVerticalMargin = BadgeViewUtil.dp2px(context, 4f)
-        mBadgeHorizontalMargin = BadgeViewUtil.dp2px(context, 4f)
         mBadgeGravity = defaultBadgeGravity
-        isShowBadge = false
-        badgeText = null
-        bitmap = null
-        mIsDraging = false
-        mDragable = false
-        mBadgeBorderColor = Color.WHITE
-        mDragExtra = BadgeViewUtil.dp2px(context, 4f)
-        mBadgeDragExtraRectF = RectF()
+        initDefaultAttrs(context)
         initCustomAttrs(context, attrs)
         afterInitDefaultAndCustomAttrs()
         mDropBadgeView = DragBadgeView(context, this)

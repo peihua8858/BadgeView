@@ -19,7 +19,7 @@ class DragBadgeView(context: Context, badgeViewHelper: BadgeViewHelper) : View(c
     private var mBadgePaint: Paint = Paint()
     private val mWindowManager: WindowManager =
         context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    private var mLayoutParams: WindowManager.LayoutParams
+    private var mLayoutParams: WindowManager.LayoutParams = WindowManager.LayoutParams()
     private var mStartX = 0
     private var mStartY = 0
     private var mExplosionAnimator: ExplosionAnimator? = null
@@ -82,6 +82,28 @@ class DragBadgeView(context: Context, badgeViewHelper: BadgeViewHelper) : View(c
     private var mDismissThreshold = 0
     private var mDismissAble = false
     private var mIsDragDisappear = false
+    private fun initBadgePaint() {
+        mBadgePaint = Paint()
+        mBadgePaint.isAntiAlias = true
+        mBadgePaint.style = Paint.Style.FILL
+        // 设置mBadgeText居中，保证mBadgeText长度为1时，文本也能居中
+        mBadgePaint.textAlign = Paint.Align.CENTER
+        mBadgePaint.textSize = mBadgeViewHelper.badgeTextSize.toFloat()
+    }
+
+    private fun initLayoutParams() {
+        mLayoutParams.gravity = Gravity.LEFT + Gravity.TOP
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        mLayoutParams.format = PixelFormat.TRANSLUCENT
+        mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL
+        mLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        mLayoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+    }
+
+    private fun initStick() {
+        mMaxDragRadius = BadgeViewUtil.dp2px(context, 10f)
+        mDragStickRadiusDifference = BadgeViewUtil.dp2px(context, 1f)
+    }
 
     override fun onDraw(canvas: Canvas) {
         try {
@@ -168,10 +190,6 @@ class DragBadgeView(context: Context, badgeViewHelper: BadgeViewHelper) : View(c
 
         // 3. 获取控制点坐标
         mControlPoint = BadgeViewUtil.getMiddlePoint(mDragCenter, mStickCenter)
-
-        // 保存画布状态
-        canvas.save()
-        canvas.translate(0f, -BadgeViewUtil.getStatusBarHeight(mBadgeViewHelper.rootView).toFloat())
         if (!mIsDragDisappear) {
             if (!mDismissAble) {
                 // 3. 画连接部分
@@ -199,9 +217,6 @@ class DragBadgeView(context: Context, badgeViewHelper: BadgeViewHelper) : View(c
             // 1. 画拖拽圆
             canvas.drawCircle(mDragCenter.x, mDragCenter.y, mDragRadius, mBadgePaint)
         }
-
-        // 恢复上次的保存状态
-        canvas.restore()
     }
     /**
      * distance 0 -> mDismissThreshold
@@ -409,8 +424,7 @@ class DragBadgeView(context: Context, badgeViewHelper: BadgeViewHelper) : View(c
     private fun getNewStartY(rawY: Float): Int {
         val badgeHeight = mBadgeViewHelper.badgeRectF.height().toInt()
         val maxNewY = height - badgeHeight
-        val newStartY =
-            rawY.toInt() - badgeHeight / 2 - BadgeViewUtil.getStatusBarHeight(mBadgeViewHelper.rootView)
+        val newStartY = rawY.toInt() - badgeHeight / 2
         return Math.min(Math.max(0, newStartY), maxNewY)
     }
 
@@ -443,20 +457,9 @@ class DragBadgeView(context: Context, badgeViewHelper: BadgeViewHelper) : View(c
     }
 
     init {
-        mBadgePaint.isAntiAlias = true
-        mBadgePaint.style = Paint.Style.FILL
-        // 设置mBadgeText居中，保证mBadgeText长度为1时，文本也能居中
-        mBadgePaint.textAlign = Paint.Align.CENTER
-        mBadgePaint.textSize = mBadgeViewHelper.badgeTextSize.toFloat()
-        mLayoutParams = WindowManager.LayoutParams()
-        mLayoutParams.gravity = Gravity.LEFT + Gravity.TOP
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-        mLayoutParams.format = PixelFormat.TRANSLUCENT
-        mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST
-        mLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-        mLayoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
-        mMaxDragRadius = BadgeViewUtil.dp2px(context, 10f)
-        mDragStickRadiusDifference = BadgeViewUtil.dp2px(context, 1f)
+        initBadgePaint()
+        initLayoutParams()
+        initStick()
         mSetExplosionAnimatorNullTask = SetExplosionAnimatorNullTask(this)
     }
 }
