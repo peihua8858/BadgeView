@@ -24,7 +24,7 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 groupId = 'com.github.peihua8858'
-                artifactId = 'BadgeView-compiler'
+                artifactId = 'compiler'
                 version = '1.0.0'
             }
         }
