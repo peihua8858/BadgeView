@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.fz.badgeview.BadgeFloatingActionButton
-import com.fz.badgeview.BadgeImageView
 import com.fz.badgeview.DragDismissDelegate
 import com.fz.badgeview.IBadgeFeature
 import com.fz.badgeview.annotation.BadgeView
@@ -27,14 +25,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val ivIcon: BadgeImageView = findViewById(R.id.iv_station_letter_icon)
-        ivIcon.showTextBadge("22")
-        val bfdActionButton: BadgeFloatingActionButton = findViewById(R.id.bfab_main_chat)
-        bfdActionButton.showTextBadge("22")
-        bfdActionButton.setDragDismissDelegate(object : DragDismissDelegate {
-            override fun onDismiss(feature: IBadgeFeature) {
-               Toast.makeText(this@MainActivity,"清空聊天消息",Toast.LENGTH_SHORT).show()
-            }
-        })
+//        val ivIcon: BadgeImageView = findViewById(R.id.iv_station_letter_icon)
+//        ivIcon.showTextBadge("22")
+//        val bfdActionButton: BadgeFloatingActionButton = findViewById(R.id.bfab_main_chat)
+//        bfdActionButton.showTextBadge("22")
+//        bfdActionButton.setDragDismissDelegate(object : DragDismissDelegate {
+//            override fun onDismiss(feature: IBadgeFeature) {
+//               Toast.makeText(this@MainActivity,"清空聊天消息",Toast.LENGTH_SHORT).show()
+//            }
+//        })
     }
 }

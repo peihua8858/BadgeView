@@ -41,7 +41,7 @@ dependencies {
     implementation project(":annotation")
 //    annotationProcessor project(":compiler")
 //    implementation 'com.fz.badgeview:annotation:1.0.0'
-    kapt 'com.fz.badgeview:compiler:1.0.0'
+//    kapt 'com.fz.badgeview:compiler:1.0.0'
 //    kapt 'com.fz.badgeview:compiler:1.0.1-SNAPSHOT'
     implementation 'com.github.peihua8858.ImageLoader:imageloader:1.0.8'
 //    implementation 'com.github.bingoogolapple.BGABadgeView-Android:api:1.2.0'
