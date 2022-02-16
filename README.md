@@ -1,4 +1,4 @@
-:heartpulse:BGABadgeView-Android:heartpulse:
+:heartpulse:BadgeView-Android:heartpulse:
 ============
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-BGABadgeView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2106)
