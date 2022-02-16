@@ -1,11 +1,7 @@
-package com.fz.badgeview.annotation;
+package com.fz.badgeview.annotation
 
-import android.view.View;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import android.view.View
+import kotlin.reflect.KClass
 
 /**
  * 徽章视图
@@ -14,8 +10,6 @@ import java.lang.annotation.Target;
  * @version 1.0
  * @date 2022/2/16 9:14
  */
-@Retention(RetentionPolicy.CLASS)
-@Target(ElementType.TYPE)
-public @interface BadgeView {
-    Class<? extends View>[] values();
-}
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
+annotation class BadgeView(val values: Array<KClass<out View>>)

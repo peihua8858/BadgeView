@@ -12,7 +12,6 @@ java {
 dependencies {
     compileOnly project(':annotation')
 //    compileOnly 'com.fz.badgeview:annotation:1.0.0'
-    implementation 'com.github.bingoogolapple.BGABadgeView-Android:annotation:1.2.0'
     compileOnly 'com.google.auto.service:auto-service:1.0.1'
     implementation 'com.google.auto:auto-common:1.2'
     implementation 'com.squareup:javapoet:1.10.0'
@@ -26,6 +25,7 @@ afterEvaluate {
                 groupId = 'com.github.peihua8858'
                 artifactId = 'compiler'
                 version = '1.0.0'
+                from(components.getByName("java"))
             }
         }
     }

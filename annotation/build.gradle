@@ -20,6 +20,7 @@ afterEvaluate {
                 groupId = 'com.github.peihua8858'
                 artifactId = 'annotation'
                 version = '1.0.0'
+                from(components.getByName("java"))
             }
         }
     }

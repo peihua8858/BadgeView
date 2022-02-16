@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.fz.badgeview.DragDismissDelegate
-import com.fz.badgeview.IBadgeFeature
 import com.fz.badgeview.annotation.BadgeView
 import com.fz.imageloader.widget.RatioImageView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
