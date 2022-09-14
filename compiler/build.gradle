@@ -16,6 +16,15 @@ dependencies {
     implementation 'com.google.auto:auto-common:1.2'
     implementation 'com.squareup:javapoet:1.10.0'
 }
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 group = 'com.github.peihua8858'
 afterEvaluate {
     publishing {
@@ -26,6 +35,8 @@ afterEvaluate {
                 artifactId = 'compiler'
                 version = '1.0.0'
                 from(components.getByName("java"))
+                artifact sourceJar
+                artifact javadocJar
             }
         }
     }
