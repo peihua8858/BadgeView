@@ -37,13 +37,13 @@ dependencies {
 2. 需要哪些类具有徽章功能，就把那些类的 Class 作为 BadgeView 注解的参数「下面的代码块给出了例子，不需要的可以删掉对应的行」
 #### Kotlin
 ```kotlin
-@BadgeView(values = [RatioImageView::class, TextView::class, FrameLayout::class])
+@BadgeView([RatioImageView::class, TextView::class, FrameLayout::class])
 class MainActivity : BaseActivity(R.layout.activity_main) {
 }
 ```
 #### Java
 ```java
-@BadgeView(values = {View.class, TextView.class, FrameLayout.class})
+@BadgeView({View.class, TextView.class, FrameLayout.class})
 public class MainActivity extends BaseActivity{
 }
 ```
