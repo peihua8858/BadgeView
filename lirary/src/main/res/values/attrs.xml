@@ -33,23 +33,4 @@
         <!-- 触发开始拖拽徽章事件的扩展触摸距离 -->
         <attr name="badge_dragExtra" format="reference|dimension" />
     </declare-styleable>
-    <declare-styleable name="BubbleLayout">
-        <attr name="bl_arrowWidth" format="dimension|reference" />
-        <attr name="bl_cornersRadius" format="dimension|reference" />
-        <attr name="bl_arrowHeight" format="dimension|reference" />
-        <attr name="bl_arrowPosition" format="dimension|reference" />
-        <attr name="bl_bubbleColor" format="color|reference" />
-        <attr name="bl_strokeWidth" format="dimension|reference" />
-        <attr name="bl_strokeColor" format="color|reference" />
-        <attr name="bl_arrowDirection" format="enum">
-            <enum name="start" value="0" />
-            <enum name="end" value="1" />
-            <enum name="top" value="2" />
-            <enum name="bottom" value="3" />
-            <enum name="start_center" value="4" />
-            <enum name="end_center" value="5" />
-            <enum name="top_center" value="6" />
-            <enum name="bottom_center" value="7" />
-        </attr>
-    </declare-styleable>
 </resources>
