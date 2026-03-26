@@ -13,13 +13,13 @@ dependencies {
 }
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
-    classifier "sources"
+//    classifier "sources"
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
 group = 'com.github.peihua8858'
 afterEvaluate {
     publishing {
@@ -31,7 +31,7 @@ afterEvaluate {
                 version = '1.0.0'
                 from(components.getByName("java"))
                 artifact sourceJar
-                artifact javadocJar
+//                artifact javadocJar
             }
         }
     }

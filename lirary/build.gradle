@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdk 31
-
+    namespace "com.fz.badgeview"
     defaultConfig {
         minSdk 21
         targetSdk 31
@@ -37,19 +37,19 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.github.peihua8858:KLog:1.0.3'
 }
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+//task sourceJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier "sources"
+//}
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.sourceFiles
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
 group = 'com.github.peihua8858'
 afterEvaluate {
     publishing {
@@ -61,8 +61,8 @@ afterEvaluate {
                 artifactId = 'BadgeView'
                 version = '1.0.2'
                 artifact bundleReleaseAar
-                artifact sourceJar
-                artifact javadocJar
+//                artifact sourceJar
+//                artifact javadocJar
             }
         }
     }

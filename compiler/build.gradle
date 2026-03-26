@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'maven-publish'
+    id 'com.google.devtools.ksp'
 //    id 'kotlin-kapt'
 }
 
@@ -12,19 +13,22 @@ java {
 dependencies {
     compileOnly project(':annotation')
 //    compileOnly 'com.fz.badgeview:annotation:1.0.0'
-    compileOnly 'com.google.auto.service:auto-service:1.0.1'
+    // 新增 KSP 版 AutoService
+    ksp "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
+    compileOnly "com.google.auto.service:auto-service-annotations:1.1.1"
+//    compileOnly 'com.google.auto.service:auto-service:1.0.1'
     implementation 'com.google.auto:auto-common:1.2'
     implementation 'com.squareup:javapoet:1.10.0'
 }
-task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier "sources"
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+//task sourceJar(type: Jar) {
+//    from sourceSets.main.allSource
+//    classifier "sources"
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
 group = 'com.github.peihua8858'
 afterEvaluate {
     publishing {
@@ -35,8 +39,8 @@ afterEvaluate {
                 artifactId = 'compiler'
                 version = '1.0.0'
                 from(components.getByName("java"))
-                artifact sourceJar
-                artifact javadocJar
+//                artifact sourceJar
+//                artifact javadocJar
             }
         }
     }
