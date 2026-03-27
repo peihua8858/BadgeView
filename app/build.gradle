@@ -1,16 +1,17 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 android {
-    compileSdk 31
-    namespace "com.fz.badgeview.dome"
+    compileSdk 35
+    namespace "com.fz.badgeview.demo"
     defaultConfig {
         applicationId "com.fz.badgeview.demo"
         minSdk 21
-        targetSdk 31
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -24,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
 
@@ -39,7 +40,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation project(":lirary")
     implementation project(":annotation")
-//    annotationProcessor project(":compiler")
+    ksp(project(":compiler"))
 //    implementation 'com.fz.badgeview:annotation:1.0.0'
 //    kapt 'com.github.peihua8858:compiler:1.0.0'
 //    implementation 'com.github.peihua8858:annotation:1.0.0'

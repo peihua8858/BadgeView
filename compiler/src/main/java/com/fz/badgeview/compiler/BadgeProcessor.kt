@@ -14,7 +14,7 @@ import javax.lang.model.type.MirroredTypesException
 import javax.lang.model.util.Elements
 import javax.tools.Diagnostic
 
-@SuppressWarnings("unused")
+@Suppress("MISSING_DEPENDENCY_CLASS_IN_EXPRESSION_TYPE")
 @AutoService(Processor::class)
 class BadgeProcessor : AbstractProcessor() {
     private val CLASS_JAVA_DOC =
@@ -99,7 +99,7 @@ class BadgeProcessor : AbstractProcessor() {
             // 获取该注解的值
             val badgeAnnotation = classElement.getAnnotation(BadgeView::class.java)
             try {
-                badgeAnnotation.value
+                badgeAnnotation.values
             } catch (e: MirroredTypesException) {
                 val typeMirrors = e.typeMirrors
                 for (typeMirror in typeMirrors) {
