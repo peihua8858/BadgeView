@@ -131,27 +131,18 @@ class KspBadgeProcessor(private val environment: SymbolProcessorEnvironment) : S
     }
     private fun generateMethod(typeBuilder: TypeSpec.Builder, classDeclaration: KSClassDeclaration) {
         mBadgeMethodImpl.apply {
-            constructor(typeBuilder, classDeclaration)
-            onTouchEvent(typeBuilder)
-            callSuperOnTouchEvent(typeBuilder)
-            onDraw(typeBuilder, classDeclaration)
-            showCirclePointBadge(typeBuilder)
-            showTextBadge(typeBuilder)
-            hiddenBadge(typeBuilder)
-            showDrawableBadge(typeBuilder)
-            setDragDismissDelegate(typeBuilder)
-            isShowBadge(typeBuilder)
-            isDraggable(typeBuilder)
-            isDragging(typeBuilder)
-            getBadgeViewHelper(typeBuilder)
-            setBadgeBgColorInt(typeBuilder)
-            setBadgeTextColorInt(typeBuilder)
-            setBadgeTextSizeSp(typeBuilder)
-            setBadgeVerticalMarginDp(typeBuilder)
-            setBadgeHorizontalMarginDp(typeBuilder)
-            setBadgePaddingDp(typeBuilder)
-            setBadgeGravity(typeBuilder)
-            setDraggable(typeBuilder)
+            val methods = this.javaClass.declaredMethods
+            environment.logger.info("generateMethod>>>> methods.size: ${methods.size}")
+            for (method in methods) {
+                val parameters = method.parameters
+                if (parameters.size == 2) {
+                    method.invoke(this, typeBuilder, classDeclaration)
+                } else {
+                    if (method.name!="dispatchDraw") {
+                        method.invoke(this, typeBuilder)
+                    }
+                }
+            }
         }
 
     }

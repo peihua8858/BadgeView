@@ -143,27 +143,17 @@ class BadgeProcessor : AbstractProcessor() {
 
     private fun generateMethod(typeBuilder: TypeSpec.Builder, clazz: String) {
         mBadgeableMethod?.apply {
-            constructor(typeBuilder, clazz)
-            onTouchEvent(typeBuilder)
-            callSuperOnTouchEvent(typeBuilder)
-            onDraw(typeBuilder, clazz)
-            showCirclePointBadge(typeBuilder)
-            showTextBadge(typeBuilder)
-            hiddenBadge(typeBuilder)
-            showDrawableBadge(typeBuilder)
-            setDragDismissDelegate(typeBuilder)
-            isShowBadge(typeBuilder)
-            isDraggable(typeBuilder)
-            isDragging(typeBuilder)
-            getBadgeViewHelper(typeBuilder)
-            setBadgeBgColorInt(typeBuilder)
-            setBadgeTextColorInt(typeBuilder)
-            setBadgeTextSizeSp(typeBuilder)
-            setBadgeVerticalMarginDp(typeBuilder)
-            setBadgeHorizontalMarginDp(typeBuilder)
-            setBadgePaddingDp(typeBuilder)
-            setBadgeGravity(typeBuilder)
-            setDraggable(typeBuilder)
+            val methods = this.javaClass.declaredMethods
+            for (method in methods) {
+                val parameters = method.parameters
+                if (parameters.size == 2) {
+                    method.invoke(this, typeBuilder, clazz)
+                } else {
+                    if (method.name!="dispatchDraw") {
+                        method.invoke(this, typeBuilder)
+                    }
+                }
+            }
         }
 
     }
