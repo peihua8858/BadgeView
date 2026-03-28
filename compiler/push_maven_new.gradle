@@ -1,0 +1,104 @@
+apply plugin: "maven-publish"
+def apiVersion = "1.1.18"
+def pomGroupId = "com.github.peihua8858.BadgeView"
+def pomArtifactId = "compiler"
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            afterEvaluate {
+                from components.findByName('java')
+                groupId pomGroupId
+                artifactId pomArtifactId
+                version "${apiVersion}"
+                println "发布成功：maven url = " + getGroupId() + ":" + getArtifactId() + ":" + getVersion()
+            }
+        }
+    }
+
+    repositories {
+        def repositoryInfo = getRepositoryInfo(apiVersion)
+        maven {
+            name = "Release"
+            url = repositoryInfo.get("repository")
+            credentials {
+                username = repositoryInfo.get("username")
+                password = repositoryInfo.get("password")
+            }
+        }
+        maven {
+            name = "LocalFile"
+            url = uri("${rootDir}/plugin_libs")
+        }
+    }
+}
+
+def getRepositoryInfo(String version) {
+    HashMap info = new HashMap()
+    if (version.endsWith("-SNAPSHOT")) {
+        info.put("repository", "http://" + maven_address + "/repository/globalegrow-snapshot/")
+        info.put("username", "longxl")
+        info.put("password", "longxl123")
+    } else {
+        info.put("repository", "http://" + maven_address + "/repository/globalegrow/")
+        info.put("username", "longxl")
+        info.put("password", "longxl123")
+    }
+    return info
+}
+
+task deleteBuild(type: Delete) {
+    doFirst {
+        println "deleteBuild() start"
+    }
+    def buildDir = project.buildDir.absolutePath
+    delete buildDir
+    doLast {
+        println "deleteBuild() end"
+    }
+}
+deleteBuild.mustRunAfter "clean"
+assemble.mustRunAfter "deleteBuild"
+task publishLibraryToRemoteReleaseMaven {
+    doFirst {
+        println "publishLibraryToRemoteMaven() start"
+    }
+    group = 'genie-publish'
+    description = 'Publish AAR to remote Maven repo (fresh copy)'
+    dependsOn 'clean'
+    dependsOn 'deleteBuild'
+    dependsOn 'assemble'
+    dependsOn 'publishLibraryPublicationToReleaseRepository'
+    publishLibraryPublicationToReleaseRepository.mustRunAfter "assemble"
+    doLast {
+        println "publishLibraryToRemoteMaven() end"
+    }
+}
+task deleteLocalFile(type: Delete) {
+    doFirst {
+        println "deleteLocalFile() start"
+    }
+    def dir = project.rootDir.absolutePath + "/plugin_libs"
+    delete dir
+    doLast {
+        println "deleteLocalFile() end"
+    }
+}
+
+task publishLibraryToLocalFileMaven {
+    doFirst {
+        println "publishLibraryToLocalFileMaven() start"
+    }
+    group = 'genie-publish'
+    description = 'Publish AAR to local Maven repo (fresh copy)'
+    dependsOn 'clean'
+    dependsOn 'deleteBuild'
+    dependsOn 'deleteLocalFile'
+    dependsOn 'assemble'
+    dependsOn 'publishLibraryPublicationToLocalFileRepository'
+    deleteLocalFile.mustRunAfter "assemble"
+    publishLibraryPublicationToLocalFileRepository.mustRunAfter "deleteLocalFile"
+    doLast {
+        println "publishLibraryToLocalFileMaven() end"
+    }
+}

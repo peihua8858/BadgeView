@@ -7,7 +7,7 @@ def mavenUserName = "longxl"
 def mavenPwd = "longxl123"
 def sdkVersionName = "1.0.0"
 def sdkVersionNameSnapshot = "1.0.1-SNAPSHOT"
-def pomGroupId = "com.fz.badgeview"
+def pomGroupId = "com..badgeview"
 def pomArtifactId = "compiler"
 //task androidJavadocs(type: Javadoc) {
 //    options.encoding = "utf-8"

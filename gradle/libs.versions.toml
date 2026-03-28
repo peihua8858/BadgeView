@@ -13,6 +13,12 @@ kotlinStdlib = "2.1.20"
 kspApi = "2.1.10-1.0.31"
 ksp = "2.3.6"
 ksp-autoservice = "1.2.0"
+coreKtx = "1.18.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.7.1"
+material = "1.13.0"
 [libraries]
 auto-common = { module = "com.google.auto:auto-common", version.ref = "autoCommon" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
@@ -26,6 +32,12 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "kspApi" }
 ksp-autoservice = { group = "dev.zacsweers.autoservice", name = "auto-service-ksp", version.ref = "ksp-autoservice" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

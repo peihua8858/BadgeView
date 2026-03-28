@@ -1,4 +1,4 @@
-package com.fz.badgeview.compiler
+package com.peihua8858.badgeview.ksp
 
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.TypeSpec

@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-//    id 'kotlin-kapt'
+    id 'kotlin-kapt'
     id 'com.google.devtools.ksp'
 }
 
@@ -40,7 +40,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation project(":lirary")
     implementation project(":annotation")
-    ksp(project(":compiler"))
+//    kapt(project(":compiler"))
+    ksp(project(":ksp"))
+//    implementation 'com.github.peihua8858.BadgeView:BadgeView:1.0.8'
+//    kapt('com.github.peihua8858.BadgeView:compiler:1.0.8')
+//    implementation 'com.github.peihua8858.BadgeView:annotation:1.0.8'
 //    implementation 'com.fz.badgeview:annotation:1.0.0'
 //    kapt 'com.github.peihua8858:compiler:1.0.0'
 //    implementation 'com.github.peihua8858:annotation:1.0.0'

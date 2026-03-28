@@ -3,8 +3,6 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'maven-publish'
-//    id 'com.google.devtools.ksp'
-//    id 'kotlin-kapt'
 }
 kotlin { jvmToolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
 java {
@@ -13,12 +11,7 @@ java {
 }
 
 dependencies {
-    implementation 'com.github.peihua8858.BadgeView:annotation:1.0.8'
-//    implementation project(':annotation')
-    compileOnly libs.auto.service.annotations
     compileOnly(libs.ksp.api)
-    compileOnly libs.auto.service
-    implementation libs.javapoet
     implementation(libs.kotlinpoet.ksp)
 }
 group = 'com.github.peihua8858'
@@ -28,7 +21,7 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 groupId = 'com.github.peihua8858'
-                artifactId = 'compiler'
+                artifactId = 'ksp'
                 version = '1.0.0'
                 from(components.getByName("java"))
 //                artifact sourceJar
@@ -38,4 +31,4 @@ afterEvaluate {
     }
 }
 //apply from: "push_local_maven.gradle"
-//apply from: "push_maven_new.gradle"
+//apply from: "push_maven.gradle"
