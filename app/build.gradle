@@ -32,7 +32,16 @@ android {
         jvmTarget = '17'
     }
 }
-
+ksp {
+    arg("classes", ["android.view.View",
+                    "android.widget.TextView",
+                    "android.widget.ImageView",
+                    "android.widget.RadioButton",
+                    "android.widget.FrameLayout",
+                    "android.widget.RelativeLayout",
+                    "com.fz.imageloader.widget.RatioImageView",
+                    "com.google.android.material.floatingactionbutton.FloatingActionButton"].join("|"))
+}
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'

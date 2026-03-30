@@ -39,18 +39,32 @@ dependencies {
 
 1. 在项目任意一个类上面添加 BadgeView 注解，例如新建一个类 BadgeInit 专门用于初始化徽章控件
 2. 需要哪些类具有徽章功能，就把那些类的 Class 作为 BadgeView 注解的参数「下面的代码块给出了例子，不需要的可以删掉对应的行」
+    或者直接使用 ksp 时通过参数 args 配置
 #### Kotlin
 ```kotlin
 @BadgeView([RatioImageView::class, TextView::class, FrameLayout::class])
 class MainActivity : BaseActivity(R.layout.activity_main) {
 }
 ```
+或
 #### Java
 ```java
 @BadgeView({View.class, TextView.class, FrameLayout.class})
 public class MainActivity extends BaseActivity{
 }
 ```
+或
+#### Java
+```groovy
+ksp {
+    arg("classes", ["android.view.View",
+                    "android.widget.TextView",
+                    "android.widget.ImageView",
+                    "android.widget.RadioButton",
+                    "android.widget.FrameLayout"].join("|"))
+}
+```
+
 3. 再 AS 中执行 Build => Rebuild Project
 4. 经过前面三个步骤后就可以通过「com.fz.badgeview.Badge原始类名」来使用徽章控件了
 

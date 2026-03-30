@@ -16,10 +16,8 @@ dependencies {
     implementation 'com.github.peihua8858.BadgeView:annotation:1.0.8'
 //    implementation project(':annotation')
     compileOnly libs.auto.service.annotations
-    compileOnly(libs.ksp.api)
     compileOnly libs.auto.service
     implementation libs.javapoet
-    implementation(libs.kotlinpoet.ksp)
 }
 group = 'com.github.peihua8858'
 afterEvaluate {

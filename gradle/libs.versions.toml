@@ -1,8 +1,7 @@
 [versions]
 agp = "8.10.1"
 autoCommon = "1.2.1"
-autoService = "1.0.1"
-autoServiceAnnotations = "1.1.1"
+autoService = "1.1.1"
 javapoet = "1.13.0"
 kotlin = "2.1.10"
 kotlinpoet = "2.2.0"
@@ -22,7 +21,7 @@ material = "1.13.0"
 [libraries]
 auto-common = { module = "com.google.auto:auto-common", version.ref = "autoCommon" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
-auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
+auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlinStdlibJdk8" }
 kotlin-stdlib-common = { module = "org.jetbrains.kotlin:kotlin-stdlib-common", version.ref = "kotlinStdlib" }

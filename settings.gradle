@@ -18,7 +18,6 @@ dependencyResolutionManagement {
         mavenCentral()
         mavenLocal()
         maven { url 'https://jitpack.io' }
-        jcenter() // Warning: this repository is going to shut down soon
         maven {
             url uri('repo')
         }
