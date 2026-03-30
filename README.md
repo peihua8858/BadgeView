@@ -27,7 +27,11 @@
 dependencies {
     implementation 'com.github.peihua8858.BadgeView:BadgeView:latestVersion'
     implementation 'com.github.peihua8858.BadgeView:BadgeView-annotation:latestVersion'
-    annotationProcessor 'com.github.peihua8858.BadgeView:BadgeView-compiler:latestVersion'
+    annotationProcessor 'com.github.peihua8858.BadgeView:compiler:latestVersion'
+    //kapt
+    kapt 'com.github.peihua8858.BadgeView:compiler:latestVersion'
+    //ksd
+    ksp 'com.github.peihua8858.BadgeView:ksp:latestVersion'
 }
 ```
 
