@@ -116,6 +116,7 @@ class BadgeProcessor : AbstractProcessor() {
         processingEnv?.apply {
             printMessage(Diagnostic.Kind.NOTE, "生成 " + viewClassSet.size + " 个")
             val classNames = mutableListOf<String>()
+            val date = SimpleDateFormat("yyyy/M/dd HH:mm")
             for (clazz in viewClassSet) {
                 val lastDotIndex = clazz.lastIndexOf(".")
                 val superPackageName = clazz.substring(0, lastDotIndex)
@@ -123,7 +124,7 @@ class BadgeProcessor : AbstractProcessor() {
                 val className = CLASS_PREFIX + superClassName
                 classNames.add(className)
                 printMessage(Diagnostic.Kind.NOTE, "$clazz ====> $className")
-                val date = SimpleDateFormat("yyyy/M/dd HH:mm").format(Date())
+                date.format(Date())
                 val javaDoc = String.format(CLASS_JAVA_DOC, date)
                 val typeBuilder = TypeSpec.classBuilder(className)
                     .addJavadoc(javaDoc)

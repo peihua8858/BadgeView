@@ -86,13 +86,14 @@ class KspBadgeProcessor(private val environment: SymbolProcessorEnvironment) : S
             printMessage("生成 " + validSymbols.size + " 个")
             printMessage("Target classes from annotation: ${validSymbols.joinToString { it.simpleName.asString() }}")
             val classNames = mutableListOf<String>()
+            val date = SimpleDateFormat("yyyy/M/dd HH:mm")
             validSymbols.forEach { targetClass ->
                 val superPackageName = targetClass.packageName.asString()
                 val superClassName = targetClass.simpleName.asString()
                 val className = CLASS_PREFIX + superClassName
                 classNames.add(className)
                 printMessage("superPackageName ====> $superPackageName,superClassName: $superClassName")
-                val date = SimpleDateFormat("yyyy/M/dd HH:mm").format(Date())
+                date.format(Date())
                 val javaDoc = String.format(CLASS_JAVA_DOC, date)
                 val typeBuilder = TypeSpec.classBuilder(className)
                     .addKdoc(javaDoc)
